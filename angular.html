@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+    <title>Todo List</title>
+</head>
+<body ng-app="myApplication" ng-controller="myController">
+   <h1>To do List</h1>
+   <h1>{{names[2]}}</h1>
+   <input type="text" placeholder="Title Tag here" ng-model="task_name">
+   <button type="submit" ng-click="save()">Save</button> <br>
+    <table border="1">
+        <tr>
+            <td>#</td>
+            <td>Task Tile</td>
+            <td>Status</td>
+            <td>Action</td>
+        </tr>
+        <tr ng-repeat="task in tasks">
+            <td>{{$index+1}}</td>
+            <td class="{{task.status?'completed':''}}">{{task.task_title}}</td>
+            <td>{{task.status?"Finished":"In Progress"}}</td> 
+            <td>
+                <button type="submit" ng-click="remove($index)">Delete</button>
+                <button type="submit" ng-click="finished($index)">Finish</button>
+            </td>
+        </tr>
+    </table>
+    <script>
+        var app=angular.module("myApplication",[])
+        app.controller("myController", function($scope){
+            $scope.tasks = []
+            $scope.save = function(){
+                $scope.tasks.push({task_title:$scope.task_name, status:false})
+            }
+            $scope.finished = function(i) {
+                $scope.tasks[i].status = true;
+            }
+            $scope.remove = function(i){
+                $scope.tasks.splice(i,1)
+            }
+        })
+    </script>
+    <style>
+        .completed{
+            text-decoration: line-through   ;
+        }
+    </style>
+</body>
+</html>
